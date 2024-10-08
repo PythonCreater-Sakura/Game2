@@ -1,0 +1,73 @@
+
+
+import random
+print("Welcome to my game!")
+name = input("What's your name?")
+print(f"Hello {name}")
+class Race:
+    def __init__(self, Name, Health, Attack, Poison_num, Poison_damage):
+        self.Name = Name
+        self.Health = Health
+        self.Attack = Attack
+        self.Poison_num = Poison_num
+        self.Poison_damage = Poison_damage
+    def get_info(self):
+        return f"Your Race is : {self.Name}, \nYour Health is : {self.Health}, \nYour Attack is : {self.Attack}d, \nYourat Poison is : x{self.Poison_num}, {self.Poison_damage} damage each"
+
+    def roll(self):
+        roll = random.randint(1,self.Attack)
+        return roll
+    def poison_damage(self):
+        return self.Poison_damage
+    def poison_num(self):
+        return self.Poison_num
+while True:
+    try:
+        char = input("What character would you like to be? (Elf, Dwarf, Giant, Vampire) : ")
+        char_list = {
+            "Elf" : Race("Elf",6, 6, 3, 2),
+            "Dwarf" : Race("Dwarf",8, 8, 2, 3),
+            "Giant" : Race("Giant",10, 10, 1, 4),
+            "Vampire" : Race("Vampire",4, 4, 4, 1)
+        }
+        if char.title() in char_list:
+            print(f"You are a {char.title()} {name}! \n{char_list[char.title()].get_info()} ")
+            break
+        elif char not in char_list:
+            print("Sorry, That is not a option")
+            print("The options are : Elf, Dwarf, Giant or Vampire")
+            continue
+    except ValueError:
+        print("Sorry, That is not a option")
+        print("The options are : Elf, Dwarf, Giant or Vampire")
+Easy_Monster_Health = random.randint(3,9)
+while Easy_Monster_Health > 0:
+    Battle_1 = input(f"You have to roll a die to defeat this monster. The monster has {Easy_Monster_Health} health. Would you like to use your Attack or Poison? :")
+    if Battle_1.title() not in ("Attack","Poison"):
+        print("Sorry, That is not a option")
+        print("The options are : Attack or Poison")
+        continue
+    if Battle_1.title() in ("Attack"):
+        while True:
+            try:
+                Please_Roll = input("Please answer \"Roll\" to roll the dice :")
+                if Please_Roll.title() in ("Roll"):
+                    roll_af = char_list[char.title()].roll()
+                    print(f"You rolled {roll_af}")
+                    Easy_Monster_Health = Easy_Monster_Health - roll_af
+                    print(f"The moster health is {Easy_Monster_Health}")
+                    break
+                elif Please_Roll not in ("Roll"):
+                    print("Sorry, That is not a option")
+                    print("The options are : Roll")
+                    continue
+            except ValueError:
+                print("Sorry, That is not a option")
+                print("The options are : Roll")
+    elif Battle_1.title() in ("Poison"):
+        p_damage = char_list[char.title()].poison_damage()
+        Easy_Monster_Health = Easy_Monster_Health - p_damage
+        print(f"You have thrown poison at the monster. The monster's health is {Easy_Monster_Health}. ")
+        P_num = char_list[char.title()].poison_num()
+        P_num -= 1
+        print(f"You have {P_num} bottles of poison left")
